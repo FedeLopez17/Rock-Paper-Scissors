@@ -17,31 +17,72 @@ function playRound(){
     const computerSelection = computerPlay();
     const playerSelection = playerSelect();
     if (playerSelection === computerSelection) {
-        return "It's a tie!";
+        console.log("It's a tie!")
+        return 2;
     }
     else if (playerSelection === "Rock"){
         if (computerSelection === "Scissors"){
-            return "You win! Rock beats Scissors";
+            console.log("You win! Rock beats Scissors");
+            return 0;
         }
-        return "You lose! Paper beats Rock";
+        console.log("You lose! Paper beats Rock");
+        return 1;
     }
     else if (playerSelection === "Paper"){
         if (computerSelection === "Rock"){
-            return "You win! Paper beats Rock";
+            console.log("You win! Paper beats Rock");
+            return 0;
         }
-        return "You lose! Scissors beat Paper";
+        console.log("You lose! Scissors beat Paper");
+        return 1;
     }
     else if (playerSelection === "Scissors"){
         if (computerSelection === "Paper"){
-            return "You win! Scissors beat Paper";
+            console.log("You win! Scissors beat Paper");
+            return 0;
         }
-        return "You lose! Rock beats Scissors";
+        console.log("You lose! Rock beats Scissors");
+        return 1;
     }
     else {
-        return "Invalid input!";
+        console.log("Invalid input, try Again");
+        return 400;
     }
 }   
 
+function game(){
+    let wonGames = 0;
+    let tiedGames = 0;
+    for (let i = 1; i < 6; i++){
+        console.log(`Game number: ${i}`);
+        round = playRound();
+        if (round === 400){
+            i--;
+        }
+        if(round === 0){
+            wonGames++;
+        }
+        if(round === 2){
+            tiedGames++;
+        }
+    }
 
-result = playRound();
-console.log(result);
+    console.log(`Won games: ${wonGames}`);
+    console.log(`Tied games: ${tiedGames}`);
+    lostGames = 5 - (wonGames + tiedGames);
+    if (wonGames === lostGames){
+        console.log("It's a tie!");
+        return; 
+    }
+    if (wonGames > lostGames){
+        console.log("You won!");
+        return;
+    }
+    else {
+        console.log("You lost!");
+        return;
+    }
+}
+
+
+game();
