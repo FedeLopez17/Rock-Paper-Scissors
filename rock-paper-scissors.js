@@ -67,9 +67,10 @@ function game(){
         }
     }
 
+    lostGames = 5 - (wonGames + tiedGames);
     console.log(`Won games: ${wonGames}`);
     console.log(`Tied games: ${tiedGames}`);
-    lostGames = 5 - (wonGames + tiedGames);
+    console.log(`Lost games: ${lostGames}`);
     if (wonGames === lostGames){
         console.log("It's a tie!");
         return; 
