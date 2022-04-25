@@ -1,89 +1,117 @@
+const dots = document.querySelectorAll(".dot");
+const containerOne = document.querySelector(".outer-container.one");
+const containerTwo = document.querySelector(".outer-container.two");
+const containerThree = document.querySelector(".outer-container.three");
+const playerDiv = document.querySelector(".player-choice");
+const computerDiv = document.querySelector(".computer-choice");
+const buttons = document.querySelectorAll("button");
+buttons.forEach((button) => {button.addEventListener("click", () => {game(button.id)})});
+const user = document.querySelector("#user");
+const pc = document.querySelector("#pc");
+let counter = 1, wonGames = 0, lostGames = 0;
+let gameOver = false;
+
+
 function computerPlay(){
-    choice = Math.floor(Math.random() * 100);
-    result = (choice >= 1 && choice < 34) ? "Rock" : (choice > 66) ? "Scissors" : "Paper";
-    console.log(result); // Just for test purposes
+    const choice = Math.floor(Math.random() * 100);
+    const result = (choice >= 1 && choice < 34) ? "r" : (choice > 66) ? "s" : "p";
     return result;
 }
 
-function playerSelect(){
-    choice = prompt("Input your choice").toLowerCase();
-    let upperCaseFirstLetter = choice.charAt(0).toUpperCase();
-    choice = upperCaseFirstLetter.concat(choice.substr(1).toLowerCase());
-    console.log(choice); // Just for test purposes
-    return choice;
+function removeTransition(e){
+    if (e.propertyName !== "transform") return;
+    this.classList.remove("choice");
+  }
+
+function selectImage (who, selection){
+    if (who === "user"){
+        user.src = (selection === "r") ? "./images/rock1.png" : (selection === "p") ? "./images/paper1.png" : "./images/scissors1.png";
+        user.style.cssText= "border-radius:0;";
+    }
+    else{
+        pc.src = (selection === "r") ? "./images/rock2.png" : (selection === "p") ? "./images/paper2.png" : "./images/scissors2.png";
+        pc.style.cssText= "border-radius:0;";
+    }
 }
 
-function playRound(){
+
+function playRound(playerSelection){
+    playerDiv.classList.add("choice");
+    playerDiv.addEventListener("transitionend", removeTransition);
     const computerSelection = computerPlay();
-    const playerSelection = playerSelect();
+    computerDiv.classList.add("choice"); 
+    computerDiv.addEventListener("transitionend", removeTransition);
+    setTimeout(function() {
+        selectImage("user", playerSelection);
+        selectImage("computer", computerSelection);
+    }, 700);
+    
     if (playerSelection === computerSelection) {
-        console.log("It's a tie!")
         return 2;
     }
-    else if (playerSelection === "Rock"){
-        if (computerSelection === "Scissors"){
-            console.log("You win! Rock beats Scissors");
+    else if (playerSelection === "r"){
+        if (computerSelection === "s"){
             return 0;
         }
-        console.log("You lose! Paper beats Rock");
         return 1;
     }
-    else if (playerSelection === "Paper"){
-        if (computerSelection === "Rock"){
-            console.log("You win! Paper beats Rock");
+    else if (playerSelection === "p"){
+        if (computerSelection === "r"){
             return 0;
         }
-        console.log("You lose! Scissors beat Paper");
         return 1;
     }
-    else if (playerSelection === "Scissors"){
-        if (computerSelection === "Paper"){
-            console.log("You win! Scissors beat Paper");
+    else if (playerSelection === "s"){
+        if (computerSelection === "p"){
             return 0;
         }
-        console.log("You lose! Rock beats Scissors");
         return 1;
-    }
-    else {
-        console.log("Invalid input, try Again");
-        return 400;
     }
 }   
 
-function game(){
-    let wonGames = 0;
-    let tiedGames = 0;
-    for (let i = 1; i < 6; i++){
-        console.log(`Game number: ${i}`);
-        round = playRound();
-        if (round === 400){
-            i--;
-        }
+
+function game(playersChoice){
+    if (gameOver){
+        return;
+    }
+    else{
+        let round = playRound(playersChoice);
         if(round === 0){
             wonGames++;
+            setTimeout(() => { dots[counter - 2].style.backgroundColor = "lime"}, 700)
         }
         if(round === 2){
-            tiedGames++;
+            counter--;
         }
-    }
-
-    lostGames = 5 - (wonGames + tiedGames);
-    console.log(`Won games: ${wonGames}`);
-    console.log(`Tied games: ${tiedGames}`);
-    console.log(`Lost games: ${lostGames}`);
-    if (wonGames === lostGames){
-        console.log("It's a tie!");
-        return; 
-    }
-    if (wonGames > lostGames){
-        console.log("You won!");
-        return;
-    }
-    else {
-        console.log("You lost!");
-        return;
+        if (round === 1){
+            lostGames ++;
+            setTimeout(() => { dots[counter - 2].style.backgroundColor = "red"}, 700)
+        }
+        counter++;
+        if (counter > 5 || wonGames === 3 || lostGames === 3){
+            gameOver = true;
+            while (containerOne.firstChild){
+                containerOne.removeChild(containerOne.firstChild);
+            }
+            while (containerTwo.firstChild){
+                containerTwo.removeChild(containerTwo.firstChild);
+            }
+            while (containerThree.firstChild){
+                containerThree.removeChild(containerThree.firstChild);
+            }
+            let message = document.createElement("h1");
+            let finalOutcome = document.createElement("img");
+            let playAgain = document.createElement("button");
+            playAgain.innerHTML = "Play again";
+            playAgain.onclick = () => window.location.reload();
+            finalOutcome.src = (wonGames > lostGames) ? "./images/happy.png" : "./images/sad.png";
+            message.textContent = (wonGames > lostGames) ? "You win!" : "You lose!";
+            finalOutcome.style.cssText = "border-style: solid; border-radius: 60px; border-width: 16px;border-color: rgb(0, 58, 58);"
+            containerOne.appendChild(message);
+            containerTwo.appendChild(finalOutcome);
+            containerThree.appendChild(playAgain);
+            return;        
+        }
     }
 }
 
-
-game();
