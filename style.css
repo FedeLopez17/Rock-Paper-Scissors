@@ -55,7 +55,7 @@ body {
     min-width: 500px;
     max-width: 500px;
     flex: 1;
-    background-color: white;
+    background-color: #005f5f;
     justify-content: flex-start;
     align-items: center;
     transition: all 0.5s ease;
