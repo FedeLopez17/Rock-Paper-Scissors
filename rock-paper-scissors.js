@@ -27,12 +27,12 @@ function selectImage (who, selection){
     if (who === "user"){
         user.src = (selection === "r") ? "./images/rock1.png" : (selection === "p") ? "./images/paper1.png" : "./images/scissors1.png";
         user.style.cssText= "border-radius:0;";
-        user.parentNode.style.cssText = "background-color: #005f5f;";
+        user.parentNode.style.cssText = "background-color: white;";
     }
     else{
         pc.src = (selection === "r") ? "./images/rock2.png" : (selection === "p") ? "./images/paper2.png" : "./images/scissors2.png";
         pc.style.cssText= "border-radius:0;";
-        pc.parentNode.style.cssText = "background-color: #005f5f;";
+        pc.parentNode.style.cssText = "background-color: white;";
     }
 }
 
