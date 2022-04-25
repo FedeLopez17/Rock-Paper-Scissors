@@ -1,0 +1,99 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body {
+    display: flex;
+    background-color: teal;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+} 
+.container{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 100vh;
+    gap: 10px;
+}
+.outer-container{
+    flex: 1;
+    display: flex;
+}
+
+.outer-container.one{
+    flex: 0.5;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.dot {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-bottom: 10px;
+    background-color: white;
+    border-style:solid;
+    border-width: 6px;
+    border-color: rgb(0, 58, 58);
+  }
+
+.outer-container.two{
+    flex: 2;
+    justify-content: space-evenly;
+    
+}
+
+.choice {
+    transform: translate(0, -20px);
+  }
+  
+
+.outer-container.two .player-choice, .computer-choice{
+    display: flex;
+    min-width: 500px;
+    max-width: 500px;
+    flex: 1;
+    background-color: white;
+    justify-content: flex-start;
+    align-items: center;
+    transition: all 0.5s ease;
+    border-style: solid;
+    border-radius: 60px;
+    border-width: 16px;
+    border-color: rgb(0, 58, 58);
+}
+
+.outer-container.two .computer-choice{
+    justify-content: flex-end;
+}
+
+img{
+    flex: 0;
+    max-width: 500px;
+    border-radius: 42px;
+}
+
+.outer-container.three{
+    flex: 1;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+button{
+    width: 200px;
+    height: 100px;
+    border-radius: 60px;
+    background-color: rgb(0, 58, 58);
+    font-weight: bold;
+    font-size: 18px;
+    color: white;
+    margin-left: 6px;
+    margin-right: 6px;
+}
+
+button:hover{
+    background-color: rgb(0, 28, 28);
+    transform: scale(1.05);
+}
